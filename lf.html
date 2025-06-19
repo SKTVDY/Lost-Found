@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReuniteHub | Lost & Found Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        
+        .navbar {
+            background: #ffffff;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #27ae60;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #27ae60;
+        }
+
+        
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)),
+                        url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: #27ae60;
+            border: none;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #2ecc71;
+        }
+
+        
+        .steps {
+            padding: 5rem 5%;
+            background: #f9f9f9;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: #27ae60;
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        
+        .recent-items {
+            padding: 5rem 5%;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .item-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .item-image {
+            height: 200px;
+            background: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .item-info {
+            padding: 1.5rem;
+        }
+
+        .item-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .item-info p {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+
+        .item-info .item-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .item-status.lost {
+            background: #ffeaa7;
+            color: #e17055;
+        }
+
+        .item-status.found {
+            background: #a5dfdc;
+            color: #27ae60;
+        }
+
+        .view-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background: #2ecc71;
+        }
+
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #2ecc71;
+        }
+
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #7f8c8d;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: #27ae60;
+            font-weight: 500;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #27ae60;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        
+        .search-results {
+            padding: 5rem 5%;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 5%;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: #27ae60;
+            bottom: -8px;
+            left: 0;
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #27ae60;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <a href="index.html" class="logo">Reunite<span>Hub</span></a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#" id="reportLink">Report</a>
+            <a href="#" id="browseLink">Browse</a>
+            <a href="index1.html">Contact</a>
+            <a href="signup.html" style="color: #27ae60;">Login/Signup</a>
+        </div>
+    </nav>
+
+    
+    <section class="hero" id="home">
+        <h1>Reuniting Lost Items with Their Owners</h1>
+        <p>Join our community to report lost items or help reunite found belongings</p>
+        <div class="search-bar">
+            <input type="text" class="search-input" id="mainSearch" placeholder="Search for lost items...">
+            <button class="search-btn" id="mainSearchBtn"><i class="fas fa-search"></i> Search</button>
+        </div>
+    </section>
+
+    
+    <section class="steps">
+        <div class="section-title">
+            <h2>How It Works</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <i class="fas fa-bullhorn step-icon"></i>
+                <h3>1. Report</h3>
+                <p>Report a lost or found item with details and photos</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-search step-icon"></i>
+                <h3>2. Browse</h3>
+                <p>Search through our database of lost and found items</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-handshake step-icon"></i>
+                <h3>3. Connect</h3>
+                <p>Get connected with the owner or finder through our secure system</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="recent-items" id="recentItems">
+        <div class="section-title">
+            <h2>Recently Added Items</h2>
+        </div>
+        <div class="items-grid" id="itemsGrid">
+            
+        </div>
+    </section>
+
+    
+    <section class="search-results" id="searchResults" style="display: none;">
+        <div class="section-title">
+            <h2>Search Results</h2>
+        </div>
+        <div class="items-grid" id="searchResultsGrid">
+            
+        </div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No items found matching your search</h3>
+            <p>Try different keywords or report a new item</p>
+        </div>
+    </section>
+
+    
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeReportModal">&times;</span>
+            <h2>Report Lost or Found Item</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="lost">I Lost Something</button>
+                <button class="tab-btn" data-tab="found">I Found Something</button>
+            </div>
+            
+            <div class="tab-content active" id="lost-tab">
+                <form id="lostForm">
+                    <div class="form-group">
+                        <label for="lostItemName">Item Name *</label>
+                        <input type="text" id="lostItemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostCategory">Category *</label>
+                        <select id="lostCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="documents">Documents</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="keys">Keys</option>
+                            <option value="wallet">Wallet/Purse</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostLocation">Location Lost *</label>
+                        <input type="text" id="lostLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostDate">Date Lost *</label>
+                        <input type="date" id="lostDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostDescription">Description *</label>
+                        <textarea id="lostDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostContact">Your Contact Information *</label>
+                        <input type="text" id="lostContact" placeholder="Email or phone number" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Report Lost Item</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="found-tab">
+                <form id="foundForm">
+                    <div class="form-group">
+                        <label for="foundItemName">Item Name *</label>
+                        <input type="text" id="foundItemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundCategory">Category *</label>
+                        <select id="foundCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="documents">Documents</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="keys">Keys</option>
+                            <option value="wallet">Wallet/Purse</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundLocation">Location Found *</label>
+                        <input type="text" id="foundLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundDate">Date Found *</label>
+                        <input type="date" id="foundDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundDescription">Description *</label>
+                        <textarea id="foundDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundContact">Your Contact Information *</label>
+                        <input type="text" id="foundContact" placeholder="Email or phone number" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Report Found Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeItemModal">&times;</span>
+            <div id="itemModalContent">
+                
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>ReuniteHub</h4>
+                <p>Making communities safer by reuniting lost items with their owners</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Email: help@reunitehub.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 ReuniteHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        
+        let items = JSON.parse(localStorage.getItem('lostFoundItems')) || [
+            {
+                id: 1,
+                type: 'lost',
+                name: 'iPhone 13 Pro',
+                category: 'electronics',
+                location: 'Central Park, New York',
+                date: '2023-05-15',
+                description: 'Black iPhone 13 Pro with blue silicone case. Lost near the fountain area.',
+                contact: 'john.doe@example.com',
+                image: 'https://source.unsplash.com/random/800x600/?iphone'
+            },
+            {
+                id: 2,
+                type: 'found',
+                name: 'Leather Wallet',
+                category: 'wallet',
+                location: 'Downtown Coffee Shop',
+                date: '2023-05-14',
+                description: 'Brown leather wallet containing credit cards and ID. Initials "M.J." inside.',
+                contact: 'coffee@example.com',
+                image: 'https://source.unsplash.com/random/800x600/?wallet'
+            },
+            {
+                id: 3,
+                type: 'lost',
+                name: 'Gold Wedding Ring',
+                category: 'jewelry',
+                location: 'Main Street Gym',
+                date: '2023-05-12',
+                description: 'Gold wedding band with inscription "Forever Yours". Lost in locker room.',
+                contact: '555-123-4567',
+                image: 'https://source.unsplash.com/random/800x600/?wedding+ring'
+            },
+            {
+                id: 4,
+                type: 'found',
+                name: 'Car Keys',
+                category: 'keys',
+                location: 'Main Street Parking Lot',
+                date: '2023-05-10',
+                description: 'Set of car keys with a small teddy bear keychain. Found near parking space #42.',
+                contact: 'security@parking.com',
+                image: 'https://source.unsplash.com/random/800x600/?car+keys'
+            }
+        ];
+
+        
+        const reportLink = document.getElementById('reportLink');
+        const browseLink = document.getElementById('browseLink');
+        const reportModal = document.getElementById('reportModal');
+        const closeReportModal = document.getElementById('closeReportModal');
+        const itemModal = document.getElementById('itemModal');
+        const closeItemModal = document.getElementById('closeItemModal');
+        const itemsGrid = document.getElementById('itemsGrid');
+        const searchResults = document.getElementById('searchResults');
+        const searchResultsGrid = document.getElementById('searchResultsGrid');
+        const noResults = document.getElementById('noResults');
+        const mainSearch = document.getElementById('mainSearch');
+        const mainSearchBtn = document.getElementById('mainSearchBtn');
+        const lostForm = document.getElementById('lostForm');
+        const foundForm = document.getElementById('foundForm');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            renderItems(items);
+            
+        
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('lostDate').value = today;
+            document.getElementById('foundDate').value = today;
+        });
+
+        
+        function renderItems(itemsToRender) {
+            itemsGrid.innerHTML = '';
+            searchResultsGrid.innerHTML = '';
+            
+            if (itemsToRender.length === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+                itemsToRender.forEach(item => {
+                    const itemCard = createItemCard(item);
+                    if (searchResults.style.display === 'block') {
+                        searchResultsGrid.appendChild(itemCard);
+                    } else {
+                        itemsGrid.appendChild(itemCard);
+                    }
+                });
+            }
+        }
+
+        
+        function createItemCard(item) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.dataset.id = item.id;
+            
+            const statusClass = item.type === 'lost' ? 'lost' : 'found';
+            const statusText = item.type === 'lost' ? 'Lost' : 'Found';
+            
+            card.innerHTML = `
+                <div class="item-image" style="background-image: url('${item.image || 'https://source.unsplash.com/random/800x600/?' + item.category}')"></div>
+                <div class="item-info">
+                    <h4>${item.name}</h4>
+                    <p>${item.location} • ${formatDate(item.date)}</p>
+                    <span class="item-status ${statusClass}">${statusText}</span>
+                    <button class="view-btn">View Details</button>
+                </div>
+            `;
+            
+            card.querySelector('.view-btn').addEventListener('click', () => showItemDetails(item.id));
+            return card;
+        }
+
+    
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        
+        function showItemDetails(itemId) {
+            const item = items.find(i => i.id === itemId);
+            if (!item) return;
+            
+            const statusClass = item.type === 'lost' ? 'lost' : 'found';
+            const statusText = item.type === 'lost' ? 'Lost' : 'Found';
+            
+            document.getElementById('itemModalContent').innerHTML = `
+                <h2>${item.name}</h2>
+                <p><span class="item-status ${statusClass}">${statusText}</span></p>
+                <div style="margin: 1.5rem 0;">
+                    <div style="height: 300px; background-image: url('${item.image || 'https://source.unsplash.com/random/800x600/?' + item.category}'); background-size: cover; background-position: center; border-radius: 8px;"></div>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <p><strong>Category:</strong> ${capitalizeFirstLetter(item.category)}</p>
+                    <p><strong>Location:</strong> ${item.location}</p>
+                    <p><strong>Date ${statusText}:</strong> ${formatDate(item.date)}</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4>Description</h4>
+                    <p>${item.description}</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4>Contact Information</h4>
+                    <p>${item.contact}</p>
+                </div>
+            `;
+            
+            itemModal.style.display = 'flex';
+        }
+
+        
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        
+        function searchItems(query) {
+            if (!query.trim()) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            const results = items.filter(item => 
+                item.name.toLowerCase().includes(query.toLowerCase()) || 
+                item.description.toLowerCase().includes(query.toLowerCase()) ||
+                item.location.toLowerCase().includes(query.toLowerCase()) ||
+                item.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            renderItems(results);
+            searchResults.style.display = 'block';
+            document.getElementById('recentItems').style.display = 'none';
+        }
+
+    
+        reportLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            reportModal.style.display = 'flex';
+        });
+
+        browseLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            searchResults.style.display = 'none';
+            document.getElementById('recentItems').style.display = 'block';
+            renderItems(items);
+        });
+
+        closeReportModal.addEventListener('click', () => {
+            reportModal.style.display = 'none';
+        });
+
+        closeItemModal.addEventListener('click', () => {
+            itemModal.style.display = 'none';
+        });
+
+    
+        window.addEventListener('click', (e) => {
+            if (e.target === reportModal) {
+                reportModal.style.display = 'none';
+            }
+            if (e.target === itemModal) {
+                itemModal.style.display = 'none';
+            }
+        });
+
+    
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(`${btn.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+
+        
+        mainSearchBtn.addEventListener('click', () => {
+            searchItems(mainSearch.value);
+        });
+
+        
+        mainSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchItems(mainSearch.value);
+            }
+        });
+
+        
+        lostForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitItem('lost');
+        });
+
+        foundForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitItem('found');
+        });
+
+        
+        function submitItem(type) {
+            const formId = type === 'lost' ? 'lost' : 'found';
+            const newItem = {
+                id: Date.now(),
+                type: type,
+                name: document.getElementById(`${formId}ItemName`).value,
+                category: document.getElementById(`${formId}Category`).value,
+                location: document.getElementById(`${formId}Location`).value,
+                date: document.getElementById(`${formId}Date`).value,
+                description: document.getElementById(`${formId}Description`).value,
+                contact: document.getElementById(`${formId}Contact`).value,
+                image: '' 
+            };
+            
+            items.unshift(newItem);
+            localStorage.setItem('lostFoundItems', JSON.stringify(items));
+            
+            
+            document.getElementById(`${formId}Form`).reset();
+            document.getElementById(`${formId}Date`).value = new Date().toISOString().split('T')[0];
+            
+            
+            reportModal.style.display = 'none';
+            alert(`Your ${type} item has been reported successfully!`);
+            
+            
+            renderItems(items);
+            searchResults.style.display = 'none';
+            document.getElementById('recentItems').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

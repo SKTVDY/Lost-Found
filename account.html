@@ -1,0 +1,369 @@
+5<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | ReuniteHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+        }
+        
+        .navbar {
+            background: #ffffff;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #27ae60;
+        }
+        
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #27ae60;
+        }
+        
+        .account-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+        }
+        
+        .account-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #ddd;
+            margin-right: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info h2 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-info p {
+            color: #7f8c8d;
+        }
+        
+        .account-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .account-tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #7f8c8d;
+            position: relative;
+        }
+        
+        .account-tab.active {
+            color: #27ae60;
+            font-weight: 500;
+        }
+        
+        .account-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #27ae60;
+        }
+        
+        .account-content {
+            display: none;
+        }
+        
+        .account-content.active {
+            display: block;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .item-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .item-image {
+            height: 150px;
+            background: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .item-info {
+            padding: 1rem;
+        }
+        
+        .item-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .item-info p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .item-status.lost {
+            background: #ffeaa7;
+            color: #e17055;
+        }
+        
+        .item-status.found {
+            background: #a5dfdc;
+            color: #27ae60;
+        }
+        
+        .account-details {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-label {
+            width: 150px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #7f8c8d;
+        }
+        
+        .logout-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">Reunite<span>Hub</span></a>
+        <div class="nav-links">
+            <a href="lf2.html">Home</a>
+            <a href="#" id="reportLink">Report</a>
+            <a href="#" id="browseLink">Browse</a>
+            <a href="index1.html">Contact</a>
+            <a href="#" id="logoutLink" style="color: #e74c3c;">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="account-container">
+        <div class="account-header">
+            <div class="profile-pic">
+                <img src="https://source.unsplash.com/random/300x300/?person" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <h2 id="userName">John Doe</h2>
+                <p id="userEmail">john.doe@example.com</p>
+                <p>Member since <span id="joinDate">May 2023</span></p>
+            </div>
+        </div>
+        
+        <div class="account-tabs">
+            <button class="account-tab active" data-tab="my-items">My Items</button>
+            <button class="account-tab" data-tab="account">Account Details</button>
+        </div>
+        
+        <div class="account-content active" id="my-items-tab">
+            <h3>My Reported Items</h3>
+            <div class="items-grid" id="userItemsGrid">
+                <!-- User's items will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="account-content" id="account-tab">
+            <div class="account-details">
+                <div class="detail-row">
+                    <div class="detail-label">Full Name</div>
+                    <div class="detail-value" id="detailName">John Doe</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value" id="detailEmail">john.doe@example.com</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Member Since</div>
+                    <div class="detail-value" id="detailJoinDate">May 15, 2023</div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Check if user is logged in
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (!currentUser) {
+            window.location.href = 'signup.html';
+        } else {
+            // Display user info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('joinDate').textContent = new Date(currentUser.joined).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            
+            document.getElementById('detailName').textContent = currentUser.name;
+            document.getElementById('detailEmail').textContent = currentUser.email;
+            document.getElementById('detailJoinDate').textContent = new Date(currentUser.joined).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // Load user's items
+            loadUserItems();
+        }
+        
+        // Tab switching
+        const accountTabs = document.querySelectorAll('.account-tab');
+        const accountContents = document.querySelectorAll('.account-content');
+        
+        accountTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                accountTabs.forEach(t => t.classList.remove('active'));
+                accountContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+        
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutLink = document.getElementById('logoutLink');
+        
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'signup.html';
+        }
+        
+        logoutBtn.addEventListener('click', logout);
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+        
+        // Load user's items
+        function loadUserItems() {
+            const items = JSON.parse(localStorage.getItem('lostFoundItems')) || [];
+            const userItems = items.filter(item => item.contact.includes(currentUser.email));
+            
+            const itemsGrid = document.getElementById('userItemsGrid');
+            itemsGrid.innerHTML = '';
+            
+            if (userItems.length === 0) {
+                itemsGrid.innerHTML = '<p>You have not reported any items yet.</p>';
+                return;
+            }
+            
+            userItems.forEach(item => {
+                const statusClass = item.type === 'lost' ? 'lost' : 'found';
+                const statusText = item.type === 'lost' ? 'Lost' : 'Found';
+                
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                itemCard.innerHTML = `
+                    <div class="item-image" style="background-image: url('${item.image || 'https://source.unsplash.com/random/800x600/?' + item.category}')"></div>
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.location} • ${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                        <span class="item-status ${statusClass}">${statusText}</span>
+                    </div>
+                `;
+                
+                itemsGrid.appendChild(itemCard);
+            });
+        }
+    </script>
+</body>
+</html>

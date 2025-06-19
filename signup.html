@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup | ReuniteHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+        }
+        
+        .auth-container {
+            max-width: 500px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-header h2 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-header p {
+            color: #7f8c8d;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #7f8c8d;
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab-btn.active {
+            color: #27ae60;
+            font-weight: 500;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #27ae60;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background: #2ecc71;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #7f8c8d;
+            position: relative;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .divider::before {
+            left: 0;
+        }
+        
+        .divider::after {
+            right: 0;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7f8c8d;
+        }
+        
+        .auth-footer a {
+            color: #27ae60;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>Welcome to ReuniteHub</h2>
+            <p>Login or create an account to report and track items</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="login">Login</button>
+            <button class="tab-btn" data-tab="signup">Sign Up</button>
+        </div>
+        
+        <div class="tab-content active" id="login-tab">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            
+            <div class="divider">or continue with</div>
+            
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="#" id="switchToSignup">Sign up</a>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="signup-tab">
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            
+            <div class="divider">or sign up with</div>
+            
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                Already have an account? <a href="#" id="switchToLogin">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(`${btn.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+        
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('.tab-btn[data-tab="signup"]').classList.add('active');
+            document.getElementById('signup-tab').classList.add('active');
+        });
+        
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
+            document.getElementById('login-tab').classList.add('active');
+        });
+        
+        // Form submissions
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        
+        // Check if user is already logged in
+        if (localStorage.getItem('currentUser')) {
+            window.location.href = 'account.html';
+        }
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // In a real app, you would validate against your backend
+            // For demo purposes, we'll just check if the user exists in localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = 'account.html';
+            } else {
+                alert('Invalid email or password');
+            }
+        });
+        
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(u => u.email === email)) {
+                alert('Email already registered');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                password, // In a real app, you would hash this
+                joined: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            alert('Account created successfully!');
+            window.location.href = 'account.html';
+        });
+    </script>
+</body>
+</html>
